@@ -4,6 +4,14 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import ChatPromptTemplate
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_community.vectorstores.faiss import DistanceStrategy
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+# Access the API key
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
 class QueryHandler:
     """Class to handle queries against the FAISS index."""
 
@@ -13,7 +21,7 @@ class QueryHandler:
         self.turbo_llm = ChatOpenAI(
             temperature=0,
             model_name='gpt-4o-mini',  # Use the appropriate model
-            openai_api_key="api-key"  # Replace with your OpenAI API key
+            openai_api_key=OPENAI_API_KEY  
         )
         self.qa_chain = None  # Initialize qa_chain as None
 
