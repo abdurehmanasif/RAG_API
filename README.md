@@ -1,3 +1,4 @@
+
 # RAG Chatbot API
 
 This project implements a Retrieval-Augmented Generation (RAG) chatbot API using FastAPI, LangChain, and OpenAI's language models. The API allows users to upload documents and query them using natural language, providing responses based on the uploaded content or general knowledge from the LLM.
@@ -46,11 +47,16 @@ This project implements a Retrieval-Augmented Generation (RAG) chatbot API using
    pip install -r requirements.txt
    ```
 
-4. Set your OpenAI API key in the environment variable:
+4. Set your OpenAI API key in the `.env` file:
 
-   ```bash
-   export OPENAI_API_KEY='your_openai_api_key'  # On Windows use `set OPENAI_API_KEY='your_openai_api_key'`
-   ```
+   - Create a `.env` file in the root of the project directory.
+   - Add the following line to the `.env` file:
+
+     ```plaintext
+     OPENAI_API_KEY='your_openai_api_key'
+     ```
+
+   Replace `'your_openai_api_key'` with your actual OpenAI API key.
 
 ## Usage
 
@@ -62,24 +68,25 @@ This project implements a Retrieval-Augmented Generation (RAG) chatbot API using
 
 2. Open your browser and navigate to [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to access the interactive API documentation (Swagger UI).
 
-### Uploading Documents
+### Uploading Documents Using Postman
 
-To upload a document, you can use Postman:
+To upload a document using Postman:
 
 1. Open Postman and create a new POST request.
 2. Set the URL to `http://127.0.0.1:8000/upload/`.
-3. In the "Body" tab, select "form-data".
+3. Go to the "Body" tab and select "form-data".
 4. Add a key named `file`, set its type to "File", and choose the document you want to upload (PDF, DOCX, or CSV).
-5. Send the request.
+5. Send the request by clicking the "Send" button.
 
-### Querying the API
+### Querying the API Using Postman
 
-To query the API, you can use Postman:
+To query the API using Postman:
 
 1. Create a new POST request in Postman.
 2. Set the URL to `http://127.0.0.1:8000/query/`.
-3. In the "Body" tab, select "raw" and set the format to JSON.
-4. Add the following JSON body:
+3. Go to the "Body" tab and select "raw".
+4. Set the format to "JSON".
+5. Add the following JSON body:
 
    ```json
    {
@@ -87,25 +94,9 @@ To query the API, you can use Postman:
    }
    ```
 
-5. Send the request.
+6. Send the request by clicking the "Send" button.
 
 If documents have been uploaded, the API will respond with information based on the uploaded documents. If no documents have been uploaded, the API will provide a response based on the LLM's general knowledge.
-
-## Example
-
-Here’s an example of how to upload a document and then query the API:
-
-1. Upload a document:
-
-   ```bash
-   curl -X POST "http://127.0.0.1:8000/upload/" -F "file=@path_to_your_file.pdf"
-   ```
-
-2. Query the API:
-
-   ```bash
-   curl -X POST "http://127.0.0.1:8000/query/" -H "Content-Type: application/json" -d '{"query": "What is the summary of the document?"}'
-   ```
 
 ## Contributing
 
