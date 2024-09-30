@@ -18,8 +18,6 @@ class FileUploader:
             content = self.parser.parse_pdf(file_path)
         elif filename.endswith('.docx'):
             content = self.parser.parse_docx(file_path)
-        elif filename.endswith('.csv'):
-            content = self.parser.parse_csv(file_path)
         else:
             raise ValueError("Unsupported file type")
 
