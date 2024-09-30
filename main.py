@@ -25,7 +25,7 @@ text_preprocessor = TextPreprocessor()
 
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
-    """API endpoint to upload files (CSV, PDF, DOCX) and create/update a FAISS index."""
+    """API endpoint to upload files (PDF, DOCX) and create/update a FAISS index."""
     try:
         # Create a temporary file to save the uploaded file
         with tempfile.NamedTemporaryFile(delete=False) as temp_file:
