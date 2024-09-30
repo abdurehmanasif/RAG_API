@@ -25,12 +25,3 @@ class DocumentParser:
         except Exception as e:
             print(f"Failed to parse DOCX {file_path}: {e}")
             return None
-
-    def parse_csv(self, file_path: str) -> str:
-        """Parse a CSV file and return the text content."""
-        try:
-            df = pd.read_csv(file_path)
-            return df.to_string(index=False)  # Convert DataFrame to string without index
-        except Exception as e:
-            print(f"Failed to parse CSV {file_path}: {e}")
-            return None
