@@ -57,44 +57,4 @@ class QueryHandler:
         self.initialize_qa_chain()  # Initialize the QA chain after loading the index
         print("FAISS index loaded and QA chain initialized.")
 
-    def handle_query(self, query: str):
-        """Handle a query and return the response."""
-        if self.faiss_index is None:
-            # If no documents have been uploaded, query the LLM directly
-            response = self.turbo_llm(query)  # Query the LLM directly
-            return {
-                "result": {
-                    "query": query,
-                    "result": response,
-                    "source_documents": []
-                }
-            }
-
-        # If the FAISS index is available, proceed with the query
-        try:
-            # Perform a similarity search to get the most relevant chunks
-            results = self.faiss_index.similarity_search_with_relevance_scores(query, k=3)
-
-            # Check if results are returned in the expected format
-            if not results:
-                return {"result": "No relevant documents found."}
-
-            # Concatenate the top chunks
-            context = " ".join([res.page_content for res, score in results])
-
-            # Define the prompt template
-            review_template = """\
-            Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
-            Context: {relevant_text}
-            Question: {query}
-            Helpful Answer:"""
-            
-            prompt_template = ChatPromptTemplate.from_template(review_template)
-
-            # Invoke the QA chain
-            response = self.qa_chain.invoke(prompt_template.format(relevant_text=context, query=query))
-
-            # Return the response as a dictionary with a single key
-            return {"result": response}
-        except Exception as e:
-            raise RuntimeError(f"Error running query: {str(e)}")
+    
